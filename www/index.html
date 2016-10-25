@@ -67,7 +67,14 @@
         
         <!-- Content -->
         <div role="main" class="ui-content">
-                   
+            <input id=searchResept />
+            <div align="right">
+                <button class="ui-btn ui-btn-inline">Search</button>
+            </div> 
+            <div>
+
+            </div>
+            
         </div>
         
         <!-- Footer -->
@@ -77,10 +84,27 @@
     </div>
     
     
-    <script type="text/javascript" src="cordova.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
-    <script type="text/javascript">
-        app.initialize();
+    <script>
+        <!-- Aplication scale --> 
+         $(document).on("pagecreate", function() {       
+            $(document).on("pagecontainershow", function(){
+                ScaleContentToDevice();       
+            });
+
+            $(window).on("resize orientationchange", function(){
+                ScaleContentToDevice();
+            });
+
+            function ScaleContentToDevice(){
+                scroll(0, 0);
+                var content = $.mobile.getScreenHeight() - $(".ui-header").outerHeight() - $(".ui-footer").outerHeight() - $(".ui-content").outerHeight() + $(".ui-content").height();
+                $(".ui-content").height(content);
+            }
+        });
+        
+        <!-- -->
+        
+        
     </script>
 </body>
 
