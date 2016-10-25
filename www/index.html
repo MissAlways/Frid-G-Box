@@ -42,6 +42,7 @@
     <script src="https://code.jquery.com/jquery-2.1.4.js" integrity="sha256-siFczlgw4jULnUICcdm9gjQPZkw/YPDqhQ9+nAOScE4=" crossorigin="anonymous"></script>
     <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <script src="api.js"></script>
     <title>Frid-G-Box</title>
 </head>
 
@@ -67,12 +68,15 @@
         
         <!-- Content -->
         <div role="main" class="ui-content">
-            <input id=searchResept />
+            <input id="searchResept" />
             <div align="right">
-                <button class="ui-btn ui-btn-inline">Search</button>
+                <button id="searchBtn" class="ui-btn ui-btn-inline">Search</button>
             </div> 
             <div>
-
+                <ul data-role="listview">
+                    <li>ITEM 1<img id="kuva" src="#"/></li>
+                    <li>ITEM2</li>
+                </ul>
             </div>
             
         </div>
@@ -102,7 +106,40 @@
             }
         });
         
-        <!-- -->
+        <!-- Search recept  -->
+        $("#searchBtn").click(function(){
+              getData();
+          });
+        function getData(){
+            
+            var searched = $("#searchResept").val();
+            console.log("Searched: "+searched);
+            
+            var apiKey = myKey.key;
+            console.log("Key: "+apiKey);
+            
+            $.ajax({
+                url: "http://food2fork.com/api/search?key="+apiKey+"&q="+searched,
+                dataType: "json",
+                timeout: 5000
+            }).done(function(data){
+                var resept;
+                var title;
+                var image_url;
+                
+                for(i = 0; i < 30; i++){
+                    image_url = data.recipes[i].image_url;
+                    title = data.recipes[i].title;
+                    console.log(image_url);
+                    console.log(title);
+                }
+                $("#kuva").attr("src", image_url);
+                
+                
+            
+            })
+        }
+        
         
         
     </script>
