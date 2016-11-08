@@ -73,10 +73,9 @@
                 <button id="searchBtn" class="ui-btn ui-btn-inline">Search</button>
             </div> 
             <div>
-                <ul data-role="listview">
-                    <li>ITEM 1<img id="kuva" src="#"/></li>
-                    <li>ITEM2</li>
-                </ul>
+                <table id="lista">
+                
+                </table>
             </div>
             
         </div>
@@ -110,8 +109,7 @@
         $("#searchBtn").click(function(){
               getData();
           });
-        function getData(){
-            
+        function getData(){            
             var searched = $("#searchResept").val();
             console.log("Searched: "+searched);
             
@@ -128,13 +126,15 @@
                 var image_url;
                 
                 for(i = 0; i < 30; i++){
-                    image_url = data.recipes[i].image_url;
-                    title = data.recipes[i].title;
-                    console.log(image_url);
-                    console.log(title);
+                    if(data.recipes[i].image_url != null){
+                        image_url = data.recipes[i].image_url;
+                        title = data.recipes[i].title;
+                        console.log("url: "+image_url);
+                        console.log("title: "+title);
+                        $("#lista").append("<tr>"+"<th>" +"<img src="+image_url+" />" +"</th>" + "<th>"+ "<p>"+ title +"</p>" +"</th>"+"</tr>");
+                    }
+                    
                 }
-                $("#kuva").attr("src", image_url);
-                
                 
             
             })
