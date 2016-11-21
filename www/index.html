@@ -1,119 +1,70 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-	<!-- Meta -->
-    <meta charset="utf-8" />
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="msapplication-tap-highlight" content="no" />
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
-	
-	<!-- Imports -->
-	
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <!-- Imports -->
+
     <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"/>
-    <script src="https://code.jquery.com/jquery-2.1.4.js" integrity="sha256-siFczlgw4jULnUICcdm9gjQPZkw/YPDqhQ9+nAOScE4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-2.1.4.js"
+            integrity="sha256-siFczlgw4jULnUICcdm9gjQPZkw/YPDqhQ9+nAOScE4=" crossorigin="anonymous"></script>
     <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/index.css" />
-    <script src="api.js"></script>
-    
-	<!-- Title -->
-	
-	<title>Frid-G-Box</title>
+    <link rel="stylesheet" type="text/css" href="css/index.css"/>
+    <script src="js/api.js"></script>
+    <script src="js/scripts.js"></script>
+
+    <!-- Title -->
+    <title>Frid-G-Box</title>
 </head>
-
 <body>
-    <!-- Mainpage -->
-    <div data-role="page" id="mainpage" >
-		<!-- Options panel -->
-        <div data-role="panel" id="optionsPanel"> 
-				<ul data-role="listview">
-                    <li data-icon="home"><a href="#mainpage">Home</a></li>
-                    <li data-icon="heart"><a href="#bookmarks">Bookmarks</a></li>
-                    <li data-icon="edit"><a href="myRecipes">My Recipes</a></li>
-                    <li data-icon="gear"><a href="settings">Settings</a></li>
-                    <li data-icon="info"><a href="aboutUs">About Us</a></li>
-                    <li data-icon="delete"><a href="#" data-rel="close">Close</a></li>
-                </ul>
-				
-			</div>
-			<!-- Header -->
-        <div data-role="header">
-            <a href="#optionsPanel" class="ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all">Settings</a>
-            <h1>Frid-G-Box</h1> 
-        </div>
-        
-        <!-- Content -->
-        <div role="main" class="ui-content">
-            <!-- Search resipe -->
-			<input id="searchResipe" />
-            <div align="right">
-                <button id="searchBtn" class="ui-btn ui-btn-inline">Search</button>
-            </div> 
-            <!-- Recipes results -->
-            <table id="list"></table>
-            
-            
-        </div>
-        
-        <!-- Footer -->
-        <div data-role="footer">
-            <h4>Powered By Food2Fork.com</h4>
-        </div>
+<!-- Mainpage -->
+<div data-role="page" id="mainpage">
+    <!-- Options panel -->
+    <div data-role="panel" id="optionsPanel">
+        <ul data-role="listview">
+            <li data-icon="home"><a href="#mainpage">Home</a></li>
+            <li data-icon="heart"><a href="#bookmarks">Bookmarks</a></li>
+            <li data-icon="edit"><a href="myRecipes">My Recipes</a></li>
+            <li data-icon="gear"><a href="settings">Settings</a></li>
+            <li data-icon="info"><a href="aboutUs">About Us</a></li>
+            <li data-icon="delete"><a href="#" data-rel="close">Close</a></li>
+        </ul>
+
     </div>
-    
-    
-    <script>
-        <!-- Aplication scale --> 
-         $(document).on("pagecreate", function() {       
-            $(document).on("pagecontainershow", function(){
-                ScaleContentToDevice();       
-            });
+    <!-- Header -->
+    <div data-role="header">
+        <a href="#optionsPanel" class="ui-btn ui-icon-bars ui-btn-icon-notext ui-corner-all">Settings</a>
+        <h1>Frid-G-Box</h1>
+    </div>
 
-            $(window).on("resize orientationchange", function(){
-                ScaleContentToDevice();
-            });
+    <!-- Content -->
+    <div role="main" class="ui-content">
+        <!-- Search resipe -->
+        <input id="searchResipe"/>
+        <div align="right">
+            <button id="searchBtn" class="ui-btn ui-btn-inline">Search</button>
+        </div>
+        <!-- Recipes results -->
+        <table id="list"></table>
 
-            function ScaleContentToDevice(){
-                scroll(0, 0);
-                var content = $.mobile.getScreenHeight() - $(".ui-header").outerHeight() - $(".ui-footer").outerHeight() - $(".ui-content").outerHeight() + $(".ui-content").height();
-                $(".ui-content").height(content);
-            }
-        });
-        
-        <!-- Search recept  -->
-        $("#searchBtn").click(function(){
-              getData();
-        });
-		
-        function getData(){
-		<!-- Get text from input -->
-		var searched = $("#searchResipe").val();
-			<!-- Get api-key from api.js-->
-            var apiKey = myKey.key;
-            <!-- Get data -->
-            $.ajax({
-                url: "http://food2fork.com/api/search?key="+apiKey+"&q="+searched,
-                dataType: "json",
-                timeout: 5000
-            }).done(function(data){
-				<!-- Removes the child elements of the list-->
-				$("#list").empty();
-                var id;
-                var title;
-                var image_url;
-                <!-- Place data to table -->
-                for(i = 0; i < 30; i++){
-					<!-- Checks if data is not null and adds data to table -->
-                    if(data.recipes[i].image_url != null){
-                        image_url = data.recipes[i].image_url;
-                        title = data.recipes[i].title;
-                        $("#list").append("<tr>"+"<th>" +"<img src="+image_url+" />" +"</th>" + "<th>"+ "<p>"+ title +"</p>" +"</th>"+"</tr>");
-                    }
-                }
-            })
-        }
 
-    </script>
+    </div>
+
+    <!-- Footer -->
+    <div data-role="footer">
+        <h4>Powered By Food2Fork.com</h4>
+    </div>
+</div>
+<script type="text/javascript" src="cordova.js"></script>
+
+<script>
+    <!-- Search recept  -->
+    $("#searchBtn").click(function () {
+        console.log("GOT HERE");
+        getData();
+    });
+</script>
+
 </body>
-
 </html>

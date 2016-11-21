@@ -6,22 +6,13 @@
     <feature name="Device">
         <param name="browser-package" value="Device" />
     </feature>
-    <name>Hello World</name>
+    <name>Frid-G-Box</name>
     <description>
-        Hello World sample application that responds to the deviceready event.
+        Frid-G-Box recipe application for phone.
     </description>
-    <author email="support@phonegap.com" href="http://phonegap.com">
-        PhoneGap Team
+    <author email="ainakiurus@gmail.com" href="https://github.com/MissAlways/Frid-G-Box">
+        MissAlways
     </author>
     <content src="index.html" />
-    <icon src="icon.png" />
     <access origin="*" />
-    <allow-intent href="http://*/*" />
-    <allow-intent href="https://*/*" />
-    <allow-intent href="tel:*" />
-    <allow-intent href="sms:*" />
-    <allow-intent href="mailto:*" />
-    <allow-intent href="geo:*" />
-    <preference name="DisallowOverscroll" value="true" />
-    <preference name="android-minSdkVersion" value="14" />
 </widget>
