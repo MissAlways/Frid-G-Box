@@ -25,7 +25,8 @@ function getData() {
     $.ajax({
         url: "http://food2fork.com/api/search?key=" + apiKey + "&q=" + searched,
         dataType: "json",
-        timeout: 5000
+        timeout: 5000,
+		cached: false
     }).done(function (data) {
         <!-- Removes the child elements of the list-->
         $("#list").empty();
@@ -36,10 +37,17 @@ function getData() {
         for (i = 0; i < 30; i++) {
             <!-- Checks if data is not null and adds data to table -->
             if (data.recipes[i].image_url != null) {
-                image_url = data.recipes[i].image_url;
+                id = data.recipes[i].recipe_id;
+				image_url = data.recipes[i].image_url;
                 title = data.recipes[i].title;
-                $("#list").append("<tr>" + "<th>" + "<img src=" + image_url + " />" + "</th>" + "<th>" + "<p>" + title + "</p>" + "</th>" + "</tr>");
+                $("#list").append("<tr>" + "<th>" + "<a id="+id+" onclick=meveToRecipe() href=#recipe><img src=" + image_url + " /> </a>" + "</th>" + "<th>" + "<a id="+id+" onclick=meveToRecipe() href=#recipe><p>" + title + "</p> </a>" + "</th>" + "</tr>");
             }
         }
     })
 }
+
+function moveToRecipe(){
+	
+}
+	
+
