@@ -40,14 +40,15 @@ function getData() {
                 id = data.recipes[i].recipe_id;
 				image_url = data.recipes[i].image_url;
                 title = data.recipes[i].title;
-                $("#list").append("<tr>" + "<th>" + "<a id="+id+" onclick=meveToRecipe() href=#recipe><img src=" + image_url + " /> </a>" + "</th>" + "<th>" + "<a id="+id+" onclick=meveToRecipe() href=#recipe><p>" + title + "</p> </a>" + "</th>" + "</tr>");
+                $("#list").append("<tr>" + "<th>" + "<a id= onclick=moveToRecipe(id) href=#recipe><img src=" + image_url + " /> </a>" + "</th>" + "<th>" + "<a id="+id+" onclick=moveToRecipe(id) href=#recipe><p>" + title + "</p> </a>" + "</th>" + "</tr>");
             }
         }
     })
 }
 
-function moveToRecipe(){
-	
+function moveToRecipe(id){
+    $("#rID").text("Recipe id: "+id);
+    console.log("Recipe id: "+id);
 }
 	
 

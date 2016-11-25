@@ -14,5 +14,11 @@
         MissAlways
     </author>
     <content src="index.html" />
-    <access origin="http://food2fork.com" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
 </widget>
