@@ -14,9 +14,38 @@ $(document).on("pagecreate", function () {
         var content = $.mobile.getScreenHeight() - $(".ui-header").outerHeight() - $(".ui-footer").outerHeight() - $(".ui-content").outerHeight() + $(".ui-content").height();
         $(".ui-content").height(content);
     }
-
-
 });
+
+$(document).on("pagecreate", "#mainpage", function () {
+    <!-- Search receipe  -->
+    $("#searchBtn").click(function () {
+        getData();
+    });
+
+    <!-- Add recipe to bookmarks -->
+    $("#addBookmarkBtn").click(function () {
+        addBookmark($("#recipeId").attr('name'), $("#rName").text());
+    });
+
+    <!-- Get bookmarks -->
+    $("#getBookmarksBtn").click(function () {
+        getBookmarks();
+    });
+});
+<!-- Get saved bookmarks to list -->
+$(document).on("pagecreate", "#bookmarks", function () {
+    var recipe = storage.getItem("bookmarks");
+    for (x = 0; x < storage.length; x++) {
+        $("#bookmarkList").append("<li>" + "<a onClick=moveToRecipe(storage.key(x)) href=#recipe> <h2>" + storage.getItem(storage.key(x)) + "</h2> </a>" + "</li>");
+    }
+});
+
+var storage = window.localStorage;
+
+function addBookmark(id, name) {
+    storage.setItem(id, name);
+}
+
 
 function getData() {
     <!-- Get text from input -->
@@ -35,13 +64,18 @@ function getData() {
         var id;
         var title;
         var image_url;
+        var maxlength = 30; // 30 is max recipes per call
         <!-- Place data to table -->
-        for (i = 0; i < data.recipes.length; i++) {
-            id = data.recipes[i].recipe_id;
-            image_url = data.recipes[i].image_url;
-            title = data.recipes[i].title;
-            $("#list").append("<tr>" + "<th>" + "<a onclick=moveToRecipe(id) href=#recipe><img src=" + image_url + " /> </a>" + "</th>" + "<th>" + "<a id=" + id + " onclick=moveToRecipe(id) href=#recipe><p>" + title + "</p> </a>" + "</th>" + "</tr>");
-
+        for (i = 0; i < maxlength; i++) {
+            if (data.recipes[i].recipe_id != null) {
+                id = data.recipes[i].recipe_id;
+                image_url = data.recipes[i].image_url;
+                title = data.recipes[i].title;
+                $("#list").append("<tr>" + "<th>" + "<a onClick=moveToRecipe(id) href=#recipe><img src=" + image_url + " /> </a>" + "</th>" + "<th>" + "<a id=" + id + " onClick=moveToRecipe(id) href=#recipe><p>" + title + "</p> </a>" + "</th>" + "</tr>");
+            }
+            else {
+                break;
+            }
         }
     })
 }
@@ -65,8 +99,14 @@ function moveToRecipe(id) {
         <!-- Recipe name change -->
         $("#rName").text(data.recipe.title);
 
-        for (l = 0; l < data.recipe.ingredients.length; l++) {
-            $("#ingrList").append("<li>" + data.recipe.ingredients[l] + "</li>");
+        var maxlength = 40; //40 will be max ingredients
+
+        for (l = 0; l < maxlength; l++) {
+            if (data.recipe.ingredients[l] != null) {
+                $("#ingrList").append("<li>" + data.recipe.ingredients[l] + "</li>");
+            }else {
+                break;
+            }
         }
         <!-- Recipe source change -->
         $("#rSource_url").attr("href", data.recipe.source_url);
@@ -76,7 +116,4 @@ function moveToRecipe(id) {
 
 }
 
-function addBookmark(id, name) {
-    console.log("id: " + id + ", name: " + name);
-}
 

@@ -83,7 +83,7 @@
         <!-- resipe -->
         <div id="recipeId" name="null">
             <img id="rPicture" src="#" class="recipeImage"/>
-            <h1 id="rName">Recipe name</h1>
+            <h1 id="rName">Loading...</h1>
 
             <a href="#" id="addBookmarkBtn" class="ui-btn ui-btn-inline ui-icon-plus ui-btn-icon-left">Add to
                 bookmarks</a>
@@ -124,9 +124,10 @@
 
     <!-- Content -->
     <div role="main" class="ui-content">
-        <!-- TODO -->
+        <!-- List of bookmarks -->
+        <ul id="bookmarkList">
 
-        <p>Comming soon!</p>
+        </ul>
 
     </div>
 
@@ -242,15 +243,7 @@
 <script type="text/javascript" src="cordova.js"></script>
 
 <script>
-    <!-- Search receipe  -->
-    $("#searchBtn").click(function () {
-        getData();
-    });
 
-    <!-- Add recipe to bookmarks -->
-    $("#addBookmarkBtn").click(function () {
-        addBookmark($("#recipeId").attr('name'), $("#rName").text());
-    });
 </script>
 
 </body>
