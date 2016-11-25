@@ -47,8 +47,32 @@ function getData() {
 }
 
 function moveToRecipe(id){
-    $("#rID").text("Recipe id: "+id);
-    console.log("Recipe id: "+id);
+    <!-- Get api-key from api.js-->
+    var apiKey = myKey.key;
+    <!-- Get data -->
+    $.ajax({
+        url: "http://food2fork.com/api/get?key=" + apiKey + "&rId=" + id,
+        dataType: "json",
+        timeout: 5000,
+        cached: false
+    }).done(function (data) {
+        <!-- Removes the child elements of the ingrList-->
+        $("#ingrList").empty();
+
+        <!-- Recipe image change -->
+        $("#rPicture").attr("src", data.recipe.image_url);
+        <!-- Recipe name change -->
+        $("#rName").text(data.recipe.title);
+
+        for (l = 0; l < data.recipe.ingredients.length; l++){
+            $("#ingrList").append("<li>"+data.recipe.ingredients[l]+"</li>");
+        }
+        <!-- Recipe source change -->
+        $("#rSource_url").attr("href", data.recipe.source_url);
+        $("#rSource").text(data.recipe.source_url);
+
+    })
+
 }
 	
 
