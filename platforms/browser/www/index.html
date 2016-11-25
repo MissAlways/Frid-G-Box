@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css"/>
     <script src="js/jquery-2.1.4.js"></script>
     <script src="js/jquery.mobile-1.4.5.min.js"></script>
-    
-	<!-- CSS -->
+
+    <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="css/index.css"/>
     <script src="js/api.js"></script>
     <script src="js/scripts.js"></script>
@@ -60,7 +60,7 @@
 </div>
 <!-- Recipe page -->
 <div data-role="page" id="recipe">
-  <!-- Options panel -->
+    <!-- Options panel -->
     <div data-role="panel" id="optionsPanelrecipe">
         <ul data-role="listview">
             <li data-icon="home" class="iconLeft"><a href="#mainpage">Home</a></li>
@@ -81,15 +81,19 @@
     <!-- Content -->
     <div role="main" class="ui-content">
         <!-- resipe -->
+        <div id="recipeId" name="null">
+            <img id="rPicture" src="#" class="recipeImage"/>
+            <h1 id="rName">Recipe name</h1>
 
-        <img id="rPicture" src="#" class="recipeImage"/>
-        <h1 id="rName">Recipe name</h1>
-        <h2>Ingredients:</h2>
-        <ul id="ingrList">
+            <a href="#" id="addBookmarkBtn" class="ui-btn ui-btn-inline ui-icon-plus ui-btn-icon-left">Add to
+                bookmarks</a>
+            <h2>Ingredients:</h2>
+            <ul id="ingrList">
 
-        </ul>
-        <h2>Recipe:</h2>
-        <a id="rSource_url" href="#"><p id="rSource"></p></a>
+            </ul>
+            <h2>Recipe:</h2>
+            <a id="rSource_url" href="#"><p id="rSource"></p></a>
+        </div>
     </div>
 
     <!-- Footer -->
@@ -235,13 +239,17 @@
 </div>
 
 
-
 <script type="text/javascript" src="cordova.js"></script>
 
 <script>
-    <!-- Search recept  -->
+    <!-- Search receipe  -->
     $("#searchBtn").click(function () {
         getData();
+    });
+
+    <!-- Add recipe to bookmarks -->
+    $("#addBookmarkBtn").click(function () {
+        addBookmark($("#recipeId").attr('name'), $("#rName").text());
     });
 </script>
 

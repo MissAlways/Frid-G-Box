@@ -14,6 +14,8 @@ $(document).on("pagecreate", function () {
         var content = $.mobile.getScreenHeight() - $(".ui-header").outerHeight() - $(".ui-footer").outerHeight() - $(".ui-content").outerHeight() + $(".ui-content").height();
         $(".ui-content").height(content);
     }
+
+
 });
 
 function getData() {
@@ -28,6 +30,7 @@ function getData() {
         timeout: 5000,
 		cached: false
     }).done(function (data) {
+        console.log(data.recipe);
         <!-- Removes the child elements of the list-->
         $("#list").empty();
         var id;
@@ -59,6 +62,7 @@ function moveToRecipe(id) {
         <!-- Removes the child elements of the ingrList-->
         $("#ingrList").empty();
 
+        $("#recipeId").attr("name", id);
         <!-- Recipe image change -->
         $("#rPicture").attr("src", data.recipe.image_url);
         <!-- Recipe name change -->
@@ -73,5 +77,9 @@ function moveToRecipe(id) {
 
     })
 
+}
+
+function addBookmark(id, name) {
+    console.log("id: "+id+", name: "+name);
 }
 

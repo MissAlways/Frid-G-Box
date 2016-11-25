@@ -14,6 +14,8 @@ $(document).on("pagecreate", function () {
         var content = $.mobile.getScreenHeight() - $(".ui-header").outerHeight() - $(".ui-footer").outerHeight() - $(".ui-content").outerHeight() + $(".ui-content").height();
         $(".ui-content").height(content);
     }
+
+
 });
 
 function getData() {
@@ -28,6 +30,7 @@ function getData() {
         timeout: 5000,
 		cached: false
     }).done(function (data) {
+        console.log(data.recipe);
         <!-- Removes the child elements of the list-->
         $("#list").empty();
         var id;
@@ -40,13 +43,13 @@ function getData() {
                 id = data.recipes[i].recipe_id;
 				image_url = data.recipes[i].image_url;
                 title = data.recipes[i].title;
-                $("#list").append("<tr>" + "<th>" + "<a id= onclick=moveToRecipe(id) href=#recipe><img src=" + image_url + " /> </a>" + "</th>" + "<th>" + "<a id="+id+" onclick=moveToRecipe(id) href=#recipe><p>" + title + "</p> </a>" + "</th>" + "</tr>");
+                $("#list").append("<tr>" + "<th>" + "<a onclick=moveToRecipe(id) href=#recipe><img src=" + image_url + " /> </a>" + "</th>" + "<th>" + "<a id="+id+" onclick=moveToRecipe(id) href=#recipe><p>" + title + "</p> </a>" + "</th>" + "</tr>");
             }
         }
     })
 }
 
-function moveToRecipe(id){
+function moveToRecipe(id) {
     <!-- Get api-key from api.js-->
     var apiKey = myKey.key;
     <!-- Get data -->
@@ -59,13 +62,14 @@ function moveToRecipe(id){
         <!-- Removes the child elements of the ingrList-->
         $("#ingrList").empty();
 
+        $("#recipeId").attr("name", id);
         <!-- Recipe image change -->
         $("#rPicture").attr("src", data.recipe.image_url);
         <!-- Recipe name change -->
         $("#rName").text(data.recipe.title);
 
-        for (l = 0; l < data.recipe.ingredients.length; l++){
-            $("#ingrList").append("<li>"+data.recipe.ingredients[l]+"</li>");
+        for (l = 0; l < data.recipe.ingredients.length; l++) {
+            $("#ingrList").append("<li>" + data.recipe.ingredients[l] + "</li>");
         }
         <!-- Recipe source change -->
         $("#rSource_url").attr("href", data.recipe.source_url);
@@ -74,5 +78,8 @@ function moveToRecipe(id){
     })
 
 }
-	
+
+function addBookmark(id, name) {
+    console.log("id: "+id+", name: "+name);
+}
 
