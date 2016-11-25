@@ -14,5 +14,5 @@
         MissAlways
     </author>
     <content src="index.html" />
-    <access origin="*" />
+    <access origin="http://food2fork.com" />
 </widget>

@@ -1,6 +1,5 @@
 #lista {
     width: 100%;
-
 }
 
 #list img {
@@ -8,4 +7,13 @@
     height: 150px;
     display: inline-block;
     border-radius: 50%;
+}
+
+.iconLeft a{
+    padding-left: 2.5em !important;
+    padding-right: 1em !important;
+}
+.iconLeft a:after{
+    right: auto;
+    left: 9px;
 }
