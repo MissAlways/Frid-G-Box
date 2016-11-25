@@ -46,7 +46,7 @@ function getData() {
     })
 }
 
-function moveToRecipe(id){
+function moveToRecipe(id) {
     <!-- Get api-key from api.js-->
     var apiKey = myKey.key;
     <!-- Get data -->
@@ -64,8 +64,8 @@ function moveToRecipe(id){
         <!-- Recipe name change -->
         $("#rName").text(data.recipe.title);
 
-        for (l = 0; l < data.recipe.ingredients.length; l++){
-            $("#ingrList").append("<li>"+data.recipe.ingredients[l]+"</li>");
+        for (l = 0; l < data.recipe.ingredients.length; l++) {
+            $("#ingrList").append("<li>" + data.recipe.ingredients[l] + "</li>");
         }
         <!-- Recipe source change -->
         $("#rSource_url").attr("href", data.recipe.source_url);
@@ -74,9 +74,4 @@ function moveToRecipe(id){
     })
 
 }
-
-function addBookmark(id, name) {
-    
-}
-	
 
