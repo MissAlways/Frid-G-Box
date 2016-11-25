@@ -28,23 +28,20 @@ function getData() {
         url: "http://food2fork.com/api/search?key=" + apiKey + "&q=" + searched,
         dataType: "json",
         timeout: 5000,
-		cached: false
+        cached: false
     }).done(function (data) {
-        console.log(data.recipe);
         <!-- Removes the child elements of the list-->
         $("#list").empty();
         var id;
         var title;
         var image_url;
         <!-- Place data to table -->
-        for (i = 0; i < 30; i++) {
-            <!-- Checks if data is not null and adds data to table -->
-            if (data.recipes[i].image_url != null) {
-                id = data.recipes[i].recipe_id;
-				image_url = data.recipes[i].image_url;
-                title = data.recipes[i].title;
-                $("#list").append("<tr>" + "<th>" + "<a onclick=moveToRecipe(id) href=#recipe><img src=" + image_url + " /> </a>" + "</th>" + "<th>" + "<a id="+id+" onclick=moveToRecipe(id) href=#recipe><p>" + title + "</p> </a>" + "</th>" + "</tr>");
-            }
+        for (i = 0; i < data.recipes.length; i++) {
+            id = data.recipes[i].recipe_id;
+            image_url = data.recipes[i].image_url;
+            title = data.recipes[i].title;
+            $("#list").append("<tr>" + "<th>" + "<a onclick=moveToRecipe(id) href=#recipe><img src=" + image_url + " /> </a>" + "</th>" + "<th>" + "<a id=" + id + " onclick=moveToRecipe(id) href=#recipe><p>" + title + "</p> </a>" + "</th>" + "</tr>");
+
         }
     })
 }
@@ -61,7 +58,7 @@ function moveToRecipe(id) {
     }).done(function (data) {
         <!-- Removes the child elements of the ingrList-->
         $("#ingrList").empty();
-
+        <!-- Recipe id is hided under name in div -->
         $("#recipeId").attr("name", id);
         <!-- Recipe image change -->
         $("#rPicture").attr("src", data.recipe.image_url);
@@ -80,6 +77,6 @@ function moveToRecipe(id) {
 }
 
 function addBookmark(id, name) {
-    console.log("id: "+id+", name: "+name);
+    console.log("id: " + id + ", name: " + name);
 }
 
