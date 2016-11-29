@@ -36,7 +36,7 @@ $(document).on("pagecreate", "#mainpage", function () {
 $(document).on("pagecreate", "#bookmarks", function () {
     var recipe = storage.getItem("bookmarks");
     for (x = 0; x < storage.length; x++) {
-        $("#bookmarkList").append("<li>" + "<a onClick=moveToRecipe(storage.key(x)) href=#recipe> <h2>" + storage.getItem(storage.key(x)) + "</h2> </a>" + "</li>");
+        $("#bookmarkList").append("<li>" + "<a onClick=moveToRecipe(" + storage.key(x) +") href=#recipe> <h2>" + storage.getItem(storage.key(x)) + "</h2> </a>" + "</li>");
     }
 });
 
@@ -79,7 +79,7 @@ function getData() {
                 id = data.recipes[i].recipe_id;
                 image_url = data.recipes[i].image_url;
                 title = data.recipes[i].title;
-                $("#list").append("<tr>" + "<th>" + "<a onClick=moveToRecipe(id) href=#recipe><img src=" + image_url + " /> </a>" + "</th>" + "<th>" + "<a id=" + id + " onClick=moveToRecipe(id) href=#recipe><p>" + title + "</p> </a>" + "</th>" + "</tr>");
+                $("#list").append("<tr>" + "<th>" + "<a onClick=moveToRecipe(" + id + ") href=#recipe><img src=" + image_url + " /> </a>" + "</th>" + "<th>" + "<a id=" + id + " onClick=moveToRecipe(" +id+ ") href=#recipe><p>" + title + "</p> </a>" + "</th>" + "</tr>");
             }
             else {
                 break;
@@ -89,8 +89,12 @@ function getData() {
 }
 
 function moveToRecipe(id) {
+	
     // Get api-key from api.js
     var apiKey = myKey.key;
+	
+	console.log("http://food2fork.com/api/get?key=" + apiKey + "&rId=" + id);
+	
     // Get data 
     $.ajax({
         url: "http://food2fork.com/api/get?key=" + apiKey + "&rId=" + id,
@@ -110,7 +114,8 @@ function moveToRecipe(id) {
         var maxlength = 40; //40 will be max ingredients
 
         for (l = 0; l < maxlength; l++) {
-            if (data.recipe.ingredients[l] != null) {
+            console.log(data.recipe.ingredients.length);
+			if (data.recipe.ingredients[l] != null) {
                 $("#ingrList").append("<li>" + data.recipe.ingredients[l] + "</li>");
             }else {
                 break;
