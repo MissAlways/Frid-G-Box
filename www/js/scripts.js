@@ -43,7 +43,15 @@ $(document).on("pagecreate", "#bookmarks", function () {
 var storage = window.localStorage;
 
 function addBookmark(id, name) {
-    storage.setItem(id, name);
+    if(localStorage.getItem(id) === null){
+        storage.setItem(id, name);
+        alert("Added to bookmarks");
+    }
+    else {
+        alert("Its already in your bookmarks");
+    }
+
+
 }
 
 
