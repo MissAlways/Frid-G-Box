@@ -1,4 +1,4 @@
-<!-- Aplication scale -->
+// Aplication scale
 $(document).on("pagecreate", function () {
 
     $(document).on("pagecontainershow", function () {
@@ -17,22 +17,22 @@ $(document).on("pagecreate", function () {
 });
 
 $(document).on("pagecreate", "#mainpage", function () {
-    <!-- Search receipe  -->
+    // Search receipe
     $("#searchBtn").click(function () {
         getData();
     });
 
-    <!-- Add recipe to bookmarks -->
+    // Add recipe to bookmarks
     $("#addBookmarkBtn").click(function () {
         addBookmark($("#recipeId").attr('name'), $("#rName").text());
     });
 
-    <!-- Get bookmarks -->
+    // Get bookmarks 
     $("#getBookmarksBtn").click(function () {
         getBookmarks();
     });
 });
-<!-- Get saved bookmarks to list -->
+// Get saved bookmarks to list 
 $(document).on("pagecreate", "#bookmarks", function () {
     var recipe = storage.getItem("bookmarks");
     for (x = 0; x < storage.length; x++) {
@@ -56,24 +56,24 @@ function addBookmark(id, name) {
 
 
 function getData() {
-    <!-- Get text from input -->
+    // Get text from input 
     var searched = $("#searchResipe").val();
-    <!-- Get api-key from api.js-->
+    // Get api-key from api.js
     var apiKey = myKey.key;
-    <!-- Get data -->
+    // Get data 
     $.ajax({
         url: "http://food2fork.com/api/search?key=" + apiKey + "&q=" + searched,
         dataType: "json",
         timeout: 5000,
         cached: false
     }).done(function (data) {
-        <!-- Removes the child elements of the list-->
+        // Removes the child elements of the list
         $("#list").empty();
         var id;
         var title;
         var image_url;
         var maxlength = 30; // 30 is max recipes per call
-        <!-- Place data to table -->
+        // Place data to table 
         for (i = 0; i < maxlength; i++) {
             if (data.recipes[i].recipe_id != null) {
                 id = data.recipes[i].recipe_id;
@@ -89,22 +89,22 @@ function getData() {
 }
 
 function moveToRecipe(id) {
-    <!-- Get api-key from api.js-->
+    // Get api-key from api.js
     var apiKey = myKey.key;
-    <!-- Get data -->
+    // Get data 
     $.ajax({
         url: "http://food2fork.com/api/get?key=" + apiKey + "&rId=" + id,
         dataType: "json",
         timeout: 5000,
         cached: false
     }).done(function (data) {
-        <!-- Removes the child elements of the ingrList-->
+        // Removes the child elements of the ingrList
         $("#ingrList").empty();
-        <!-- Recipe id is hided under name in div -->
+        // Recipe id is hided under name in div 
         $("#recipeId").attr("name", id);
-        <!-- Recipe image change -->
+        // Recipe image change 
         $("#rPicture").attr("src", data.recipe.image_url);
-        <!-- Recipe name change -->
+        // Recipe name change 
         $("#rName").text(data.recipe.title);
 
         var maxlength = 40; //40 will be max ingredients
@@ -116,7 +116,7 @@ function moveToRecipe(id) {
                 break;
             }
         }
-        <!-- Recipe source change -->
+        // Recipe source change 
         $("#rSource_url").attr("href", data.recipe.source_url);
         $("#rSource").text(data.recipe.source_url);
 
