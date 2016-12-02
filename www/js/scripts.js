@@ -27,33 +27,35 @@ $(document).on("pagecreate", "#mainpage", function () {
         addBookmark($("#recipeId").attr('name'), $("#rName").text());
     });
 
-    // Get bookmarks 
-    $("#getBookmarksBtn").click(function () {
-        getBookmarks();
-    });
 });
 // Get saved bookmarks to list 
 $(document).on("pagecreate", "#bookmarks", function () {
     var recipe = storage.getItem("bookmarks");
     for (x = 0; x < storage.length; x++) {
-        $("#bookmarkList").append("<li>" + "<a onClick=moveToRecipe(" + storage.key(x) +") href=#recipe> <h2>" + storage.getItem(storage.key(x)) + "</h2> </a>" + "</li>");
+        $("#bookmarkList").append("<tr><td> <a onClick='moveToRecipe(" + storage.key(x) + ")' href='#recipe'> <h2>" + storage.getItem(storage.key(x)) + "</h2> </a> </td><td> <a onclick='deleteRecipe(" + storage.key(x) + ")' href='#' class='ui-btn ui-icon-delete ui-btn-icon-notext ui-corner-all'></a> </td></td></tr>");
     }
 });
 
 var storage = window.localStorage;
 
 function addBookmark(id, name) {
-    if(localStorage.getItem(id) === null){
+    if (localStorage.getItem(id) === null) {
         storage.setItem(id, name);
         alert("Added to bookmarks");
     }
     else {
         alert("Its already in your bookmarks");
     }
-
-
 }
 
+function deleteRecipe(id) {
+    storage.removeItem(id);
+    refreshPage();
+}
+
+function refreshPage() {
+    location.reload();
+}
 
 function getData() {
     // Get text from input 
@@ -72,29 +74,21 @@ function getData() {
         var id;
         var title;
         var image_url;
-        var maxlength = 30; // 30 is max recipes per call
         // Place data to table 
-        for (i = 0; i < maxlength; i++) {
-            if (data.recipes[i].recipe_id != null) {
-                id = data.recipes[i].recipe_id;
-                image_url = data.recipes[i].image_url;
-                title = data.recipes[i].title;
-                $("#list").append("<tr>" + "<th>" + "<a onClick=moveToRecipe(" + id + ") href=#recipe><img src=" + image_url + " /> </a>" + "</th>" + "<th>" + "<a id=" + id + " onClick=moveToRecipe(" +id+ ") href=#recipe><p>" + title + "</p> </a>" + "</th>" + "</tr>");
-            }
-            else {
-                break;
-            }
+        for (i = 0; i < data.recipes.length; i++) {
+            id = data.recipes[i].recipe_id;
+            image_url = data.recipes[i].image_url;
+            title = data.recipes[i].title;
+            $("#list").append("<tr>" + "<th>" + "<a onClick='moveToRecipe(" + id + ")' href='#recipe'><img src=" + image_url + " /> </a>" + "</th>" + "<th>" + "<a id=" + id + " onClick='moveToRecipe(" + id + ")' href='#recipe'><p>" + title + "</p> </a>" + "</th>" + "</tr>");
         }
     })
 }
 
 function moveToRecipe(id) {
-	
+
     // Get api-key from api.js
     var apiKey = myKey.key;
-	
-	console.log("http://food2fork.com/api/get?key=" + apiKey + "&rId=" + id);
-	
+
     // Get data 
     $.ajax({
         url: "http://food2fork.com/api/get?key=" + apiKey + "&rId=" + id,
@@ -111,15 +105,8 @@ function moveToRecipe(id) {
         // Recipe name change 
         $("#rName").text(data.recipe.title);
 
-        var maxlength = 40; //40 will be max ingredients
-
-        for (l = 0; l < maxlength; l++) {
-            console.log(data.recipe.ingredients.length);
-			if (data.recipe.ingredients[l] != null) {
-                $("#ingrList").append("<li>" + data.recipe.ingredients[l] + "</li>");
-            }else {
-                break;
-            }
+        for (l = 0; l < data.recipe.ingredients.length; l++) {
+            $("#ingrList").append("<li>" + data.recipe.ingredients[l] + "</li>");
         }
         // Recipe source change 
         $("#rSource_url").attr("href", data.recipe.source_url);
@@ -128,5 +115,3 @@ function moveToRecipe(id) {
     })
 
 }
-
-
