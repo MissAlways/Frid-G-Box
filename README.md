@@ -1,5 +1,7 @@
-## Frid-G-Box
+# Frid-G-Box
 Recipe application for phone.
+
+### Food2Fork.com has shut down. 
 
 I don't share my api key but it is used in the released apk.
 You can get your own for free at http://food2fork.com/about/api
@@ -10,3 +12,4 @@ myKey = {
     key: "HERE"
 }
 ```
+
